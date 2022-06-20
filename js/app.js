@@ -1,6 +1,6 @@
 'use strict';
 
-const rounds = 25;
+let rounds = 25;
 const imageList = [];
 
 let imageEls = document.querySelectorAll('img');
@@ -42,7 +42,6 @@ let imgFiles = [
 for (let i = 0; i < imgFiles.length; i++){
   new Image(imgFiles[i]);
 }
-console.log(imgFiles);
 
 renderImage();
 
@@ -79,7 +78,9 @@ function renderImage() {
 }
 
 imageEls.forEach(function(img){
-  img.addEventListener('click', voteClick);
+  // while (rounds > 0){
+    img.addEventListener('click', voteClick);
+  // }
 });
 
 function voteClick(event){
@@ -89,10 +90,14 @@ function voteClick(event){
     console.log(event.target.id, imageList[i].id);
     if (event.target.id === imageList[i].id){
       imageList[i].clicks++;
+      rounds = rounds - 1;
     }
   }
-  renderImage();
-  console.log(imageList);
+  console.log(rounds);
+  
+  if (rounds > 0){
+    renderImage();
+    console.log(imageList);
+  }
 }
-
 console.log(imageList);
