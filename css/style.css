@@ -26,3 +26,15 @@ img {
     text-align: center;
 }
 
+#chartArea{
+    display: grid;
+    /* grid-template-rows: 1fr;
+    align-content: center;
+    align-items: center;
+    justify-content: center; */
+}
+
+#myChart{
+    align-self: center;
+    justify-content: center;
+}

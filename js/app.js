@@ -5,6 +5,10 @@ const imageList = [];
 
 let imageEls = document.querySelectorAll('img');
 
+let chartEl = document.getElementById('myChart');
+let ctx = chartEl.getContext('2d');
+
+
 function Image(imgName){
   this.name = imgName.slice(0, imgName.indexOf('.'));
   this.clicks = 0;
@@ -50,6 +54,10 @@ function randomImage() {
 
 function renderImage() {
 
+  let currentImgOne = imageEls[0];
+  let currentImgTwo = imageEls[1];
+  let currentImgThree = imageEls[2];
+
   let imgOne = randomImage();
   let imgTwo = randomImage();
   let imgThree = randomImage();
@@ -58,7 +66,7 @@ function renderImage() {
     imgOne = randomImage();
   }
 
-  while (imgTwo.id === imgThree.id){
+  while (imgTwo.id === imgThree.id || imgTwo.id === imgOne.id){
     imgTwo = randomImage();
   }
 
@@ -105,16 +113,47 @@ function voteClick(event){
 }
 
 function votingResults(){
+
+  let nameResults = [];
+  let clickResults = [];
+  let viewResults = [];
+
   for (let i = 0; i < imageList.length; i++){
-    let nameResults = imageList[i].name;
-    let clickResults = imageList[i].clicks;
-    let viewResults = imageList[i].views;
-    let result = (`${nameResults} - Clicks: ${clickResults}, Views: ${viewResults}`);
+
+    nameResults.push(imageList[i].name);
+    clickResults.push(imageList[i].clicks);
+    viewResults.push(imageList[i].views);
+
+    let names = imageList[i].name;
+    let clicks = imageList[i].clicks;
+    let views = imageList[i].views;
+
+    let result = (`${names} - Clicks: ${clicks}, Views: ${views}`);
 
     let containerEl = document.getElementById('votingResults');
     let resultEl = document.createElement('p');
     containerEl.appendChild(resultEl);
     resultEl.textContent = result;
   }
+
+  console.log(clickResults);
+  let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: imgFiles,
+      datasets: [{
+        label: '# of Votes',
+        data: clickResults,
+        backgroundColor: 'Orange'
+      }, {
+        label: '# of Views',
+        data: viewResults,
+        backgroundColor: 'Blue',
+      }]
+    },
+  });
+
 }
+
+
 console.log(imageList);
