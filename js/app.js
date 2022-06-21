@@ -15,6 +15,7 @@ function Image(imgName){
   this.views = 0;
   this.id = imgName;
   this.src = `img/${imgName}`;
+  this.seen = false;
 
   imageList.push(this);
 }
@@ -54,21 +55,34 @@ function randomImage() {
 
 function renderImage() {
 
-  let currentImgOne = imageEls[0];
-  let currentImgTwo = imageEls[1];
-  let currentImgThree = imageEls[2];
-
   let imgOne = randomImage();
   let imgTwo = randomImage();
   let imgThree = randomImage();
 
-  while (imgOne.id === imgTwo.id || imgOne.id === imgThree.id){
+  let currentImgs = [imgOne.id, imgTwo.id, imgThree.id];
+
+  console.log(imgOne.id, imgTwo.id, imgThree.id);
+
+  while (imgOne.id === imgTwo.id || imgOne.id === imgThree.id || imgOne.seen === true){
     imgOne = randomImage();
   }
 
-  while (imgTwo.id === imgThree.id || imgTwo.id === imgOne.id){
+  while (imgTwo.id === imgThree.id || imgTwo.id === imgOne.id || imgTwo.seen === true){
     imgTwo = randomImage();
   }
+
+  while (imgThree.id === imgOne.id || imgThree.id === imgTwo.id || imgThree.seen === true) {
+    imgThree = randomImage();
+  }
+
+  // for (let i = 0; i < currentImgs.length; i++){
+  //   while (imgOne === currentImgs[i]){
+  //     imgOne = randomImage();
+  //   }
+  // }
+
+  console.log(imgOne.id, imgTwo.id, imgThree.id);
+  console.log(currentImgs);
 
   imageEls[0].id = imgOne.id;
   imageEls[0].src = imgOne.src;
@@ -76,12 +90,23 @@ function renderImage() {
   imageEls[1].src = imgTwo.src;
   imageEls[2].id = imgThree.id;
   imageEls[2].src = imgThree.src;
-  
+
+  console.log(imageEls);
   //Does this work because imgOne = randomImage(); = an image object created by constructor?
   imgOne.views++;
   imgTwo.views++;
   imgThree.views++;
+
+  for (let i = 0; i < imageList.length; i++){
+    imageList[i].seen = false;
+  }
+
+  imgOne.seen = true;
+  imgTwo.seen = true;
+  imgThree.seen = true;
+
 }
+
 console.log(votingRounds);
 imageEls.forEach(function(img){
   img.addEventListener('click', voteClick);
@@ -137,7 +162,7 @@ function votingResults(){
   }
 
   console.log(clickResults);
-  let myChart = new Chart(ctx, {
+  let votingChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: imgFiles,
