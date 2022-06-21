@@ -6,7 +6,7 @@ const imageList = [];
 let imageEls = document.querySelectorAll('img');
 
 function Image(imgName){
-  this.name = imgName.slice(0,-4);
+  this.name = imgName.slice(0, imgName.indexOf('.'));
   this.clicks = 0;
   this.views = 0;
   this.id = imgName;
@@ -106,11 +106,15 @@ function voteClick(event){
 
 function votingResults(){
   for (let i = 0; i < imageList.length; i++){
-    let votingText = document.getElementById('voting-results');
     let nameResults = imageList[i].name;
     let clickResults = imageList[i].clicks;
     let viewResults = imageList[i].views;
-    console.log(`${nameResults} - Clicks: ${clickResults}, Views: ${viewResults}`);
+    let result = (`${nameResults} - Clicks: ${clickResults}, Views: ${viewResults}`);
+
+    let containerEl = document.getElementById('votingResults');
+    let resultEl = document.createElement('p');
+    containerEl.appendChild(resultEl);
+    resultEl.textContent = result;
   }
 }
 console.log(imageList);
