@@ -1,14 +1,12 @@
 'use strict';
 
-let rounds = 25;
+let votingRounds = 25;
 const imageList = [];
 
 let imageEls = document.querySelectorAll('img');
-console.log(imageEls);
-
-
 
 function Image(imgName){
+  this.name = imgName.slice(0,-4);
   this.clicks = 0;
   this.views = 0;
   this.id = imgName;
@@ -76,12 +74,12 @@ function renderImage() {
   imgTwo.views++;
   imgThree.views++;
 }
-
+console.log(votingRounds);
 imageEls.forEach(function(img){
-  // while (rounds > 0){
-    img.addEventListener('click', voteClick);
-  // }
+  img.addEventListener('click', voteClick);
 });
+
+
 
 function voteClick(event){
 
@@ -90,14 +88,29 @@ function voteClick(event){
     console.log(event.target.id, imageList[i].id);
     if (event.target.id === imageList[i].id){
       imageList[i].clicks++;
-      rounds = rounds - 1;
+      votingRounds = votingRounds - 1;
     }
   }
-  console.log(rounds);
-  
-  if (rounds > 0){
-    renderImage();
-    console.log(imageList);
+
+  console.log(votingRounds);
+
+  if (votingRounds <= 0){
+    imageEls.forEach(function(img){
+      img.removeEventListener('click', voteClick);
+    });
+  }
+
+  renderImage();
+  console.log(imageList);
+}
+
+function votingResults(){
+  for (let i = 0; i < imageList.length; i++){
+    let votingText = document.getElementById('voting-results');
+    let nameResults = imageList[i].name;
+    let clickResults = imageList[i].clicks;
+    let viewResults = imageList[i].views;
+    console.log(`${nameResults} - Clicks: ${clickResults}, Views: ${viewResults}`);
   }
 }
 console.log(imageList);
