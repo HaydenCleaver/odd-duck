@@ -81,7 +81,7 @@ function renderImage() {
   imageEls[2].src = imgThree.src;
 
   console.log(imageEls);
-  
+
   //Does this work because imgOne = randomImage(); = an image object created by constructor?
   imgOne.views++;
   imgTwo.views++;
@@ -205,4 +205,7 @@ function reset(){
 
   }
 }
+
+
+
 console.log(imageList);
