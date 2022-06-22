@@ -61,10 +61,6 @@ function renderImage() {
   let imgTwo = randomImage();
   let imgThree = randomImage();
 
-  let currentImgs = [imgOne.id, imgTwo.id, imgThree.id];
-
-  console.log(imgOne.id, imgTwo.id, imgThree.id);
-
   while (imgOne.id === imgTwo.id || imgOne.id === imgThree.id || imgOne.seen === true){
     imgOne = randomImage();
   }
@@ -77,15 +73,6 @@ function renderImage() {
     imgThree = randomImage();
   }
 
-  // for (let i = 0; i < currentImgs.length; i++){
-  //   while (imgOne === currentImgs[i]){
-  //     imgOne = randomImage();
-  //   }
-  // }
-
-  console.log(imgOne.id, imgTwo.id, imgThree.id);
-  console.log(currentImgs);
-
   imageEls[0].id = imgOne.id;
   imageEls[0].src = imgOne.src;
   imageEls[1].id = imgTwo.id;
@@ -94,6 +81,7 @@ function renderImage() {
   imageEls[2].src = imgThree.src;
 
   console.log(imageEls);
+  
   //Does this work because imgOne = randomImage(); = an image object created by constructor?
   imgOne.views++;
   imgTwo.views++;
@@ -110,10 +98,14 @@ function renderImage() {
 }
 
 console.log(votingRounds);
-imageEls.forEach(function(img){
-  img.addEventListener('click', voteClick);
-});
 
+function addListener(){
+  imageEls.forEach(function(img){
+    img.addEventListener('click', voteClick);
+  });
+}
+
+addListener();
 
 
 function voteClick(event){
@@ -197,5 +189,20 @@ function votingResults(){
     });
   }
 }
- 
+
+function reset(){
+  for (let i = 0; i < imageList.length; i++){
+    localStorage.clear();
+    imageList = [];
+    votingRounds = 25;
+
+    addListener();
+
+    let chartDelete = document.getElementById('myChart');
+    chartDelete.remove();
+
+    alert('Please refresh page to begin voting again.');
+
+  }
+}
 console.log(imageList);
