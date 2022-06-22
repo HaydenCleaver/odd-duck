@@ -1,7 +1,8 @@
 'use strict';
 
 let votingRounds = 25;
-const imageList = [];
+
+let imageList = storagePull() || [];
 
 let imageEls = document.querySelectorAll('img');
 
@@ -42,10 +43,11 @@ let imgFiles = [
   'wine-glass.jpg'
 ];
 
-for (let i = 0; i < imgFiles.length; i++){
-  new Image(imgFiles[i]);
+if (!imageList.length){
+  for (let i = 0; i < imgFiles.length; i++){
+    new Image(imgFiles[i]);
+  }
 }
-
 renderImage();
 
 function randomImage() {
@@ -122,21 +124,35 @@ function voteClick(event){
     if (event.target.id === imageList[i].id){
       imageList[i].clicks++;
       votingRounds = votingRounds - 1;
+      storagePush();
     }
   }
-
   console.log(votingRounds);
 
   if (votingRounds <= 0){
     imageEls.forEach(function(img){
       img.removeEventListener('click', voteClick)
-      alert('Voting is over.');
     });
+
+    alert('Voting is now over.');
   }
 
   renderImage();
   console.log(imageList);
 }
+
+function storagePush(){
+  let stringConvert = JSON.stringify(imageList);
+  console.log(stringConvert);
+  return localStorage.setItem('images', stringConvert);
+}
+
+function storagePull(){
+  let stringStore = localStorage.getItem('images');
+  return JSON.parse(stringStore);
+}
+
+
 
 function votingResults(){
 
@@ -181,5 +197,5 @@ function votingResults(){
     });
   }
 }
-
+ 
 console.log(imageList);
