@@ -129,7 +129,8 @@ function voteClick(event){
 
   if (votingRounds <= 0){
     imageEls.forEach(function(img){
-      img.removeEventListener('click', voteClick);
+      img.removeEventListener('click', voteClick)
+      alert('Voting is over.');
     });
   }
 
@@ -155,30 +156,30 @@ function votingResults(){
 
     let result = (`${names} - Clicks: ${clicks}, Views: ${views}`);
 
-    let containerEl = document.getElementById('votingResults');
-    let resultEl = document.createElement('p');
-    containerEl.appendChild(resultEl);
-    resultEl.textContent = result;
+    // let containerEl = document.getElementById('votingResults');
+    // let resultEl = document.createElement('p');
+    // containerEl.appendChild(resultEl);
+    // resultEl.textContent = result;
   }
 
   console.log(clickResults);
-  let votingChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: imgFiles,
-      datasets: [{
-        label: '# of Votes',
-        data: clickResults,
-        backgroundColor: 'rgb(25, 119, 80)'
-      }, {
-        label: '# of Views',
-        data: viewResults,
-        backgroundColor: '#A63F37',
-      }]
-    },
-  });
-
+  if (votingRounds === 0){
+    let votingChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: imgFiles,
+        datasets: [{
+          label: '# of Votes',
+          data: clickResults,
+          backgroundColor: 'rgb(25, 119, 80)'
+        }, {
+          label: '# of Views',
+          data: viewResults,
+          backgroundColor: '#A63F37',
+        }]
+      },
+    });
+  }
 }
-
 
 console.log(imageList);

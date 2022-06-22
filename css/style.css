@@ -4,8 +4,9 @@ body{
 }
 main{
     display: grid;
-    grid-template-columns: .4fr .5fr .5fr .5fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: auto auto auto auto;
+    /* align-content: stretch; */
+    /* grid-template-rows: .3fr 1fr 1fr; */
 }
 
 header {
@@ -15,15 +16,16 @@ header {
 
 img {
     height: 200px;
-    width: auto;
+    width: 200px;
     margin-left: 0px;
     margin-right: 0px;
+    justify-self: start;
 }
 
 #voteContainer {
+    width: 300px;
     display: grid;
-    grid-template-columns: auto;
-    border: solid black 4px;
+    grid-template-columns: .3fr;
     align-items: center;
 }
 
@@ -33,13 +35,9 @@ img {
 }
 
 #chartArea{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    /* grid-template-rows: 1fr;
-    align-content: center;
-    align-items: center;
-    justify-content: center; */
+    grid-column: 3;
+    grid-row: 2;
+    /* try assigning to specific grid areas  */
 }
 
 #myChart{
