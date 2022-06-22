@@ -1,9 +1,15 @@
+body{
+    color: rgba(255, 255, 255, 0.87);
+    background-color: rgb(24, 23, 23);
+}
 main{
     display: grid;
     grid-template-columns: .4fr .5fr .5fr .5fr;
+    grid-template-rows: 1fr 1fr 1fr;
 }
 
 header {
+    background-color: rgb(25, 119, 80);
     text-align: left;
 }
 
@@ -26,3 +32,16 @@ img {
     text-align: center;
 }
 
+#chartArea{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    /* grid-template-rows: 1fr;
+    align-content: center;
+    align-items: center;
+    justify-content: center; */
+}
+
+#myChart{
+
+}

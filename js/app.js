@@ -5,12 +5,17 @@ const imageList = [];
 
 let imageEls = document.querySelectorAll('img');
 
+let chartEl = document.getElementById('myChart');
+let ctx = chartEl.getContext('2d');
+
+
 function Image(imgName){
   this.name = imgName.slice(0, imgName.indexOf('.'));
   this.clicks = 0;
   this.views = 0;
   this.id = imgName;
   this.src = `img/${imgName}`;
+  this.seen = false;
 
   imageList.push(this);
 }
@@ -54,13 +59,30 @@ function renderImage() {
   let imgTwo = randomImage();
   let imgThree = randomImage();
 
-  while (imgOne.id === imgTwo.id || imgOne.id === imgThree.id){
+  let currentImgs = [imgOne.id, imgTwo.id, imgThree.id];
+
+  console.log(imgOne.id, imgTwo.id, imgThree.id);
+
+  while (imgOne.id === imgTwo.id || imgOne.id === imgThree.id || imgOne.seen === true){
     imgOne = randomImage();
   }
 
-  while (imgTwo.id === imgThree.id){
+  while (imgTwo.id === imgThree.id || imgTwo.id === imgOne.id || imgTwo.seen === true){
     imgTwo = randomImage();
   }
+
+  while (imgThree.id === imgOne.id || imgThree.id === imgTwo.id || imgThree.seen === true) {
+    imgThree = randomImage();
+  }
+
+  // for (let i = 0; i < currentImgs.length; i++){
+  //   while (imgOne === currentImgs[i]){
+  //     imgOne = randomImage();
+  //   }
+  // }
+
+  console.log(imgOne.id, imgTwo.id, imgThree.id);
+  console.log(currentImgs);
 
   imageEls[0].id = imgOne.id;
   imageEls[0].src = imgOne.src;
@@ -68,12 +90,23 @@ function renderImage() {
   imageEls[1].src = imgTwo.src;
   imageEls[2].id = imgThree.id;
   imageEls[2].src = imgThree.src;
-  
+
+  console.log(imageEls);
   //Does this work because imgOne = randomImage(); = an image object created by constructor?
   imgOne.views++;
   imgTwo.views++;
   imgThree.views++;
+
+  for (let i = 0; i < imageList.length; i++){
+    imageList[i].seen = false;
+  }
+
+  imgOne.seen = true;
+  imgTwo.seen = true;
+  imgThree.seen = true;
+
 }
+
 console.log(votingRounds);
 imageEls.forEach(function(img){
   img.addEventListener('click', voteClick);
@@ -105,16 +138,47 @@ function voteClick(event){
 }
 
 function votingResults(){
+
+  let nameResults = [];
+  let clickResults = [];
+  let viewResults = [];
+
   for (let i = 0; i < imageList.length; i++){
-    let nameResults = imageList[i].name;
-    let clickResults = imageList[i].clicks;
-    let viewResults = imageList[i].views;
-    let result = (`${nameResults} - Clicks: ${clickResults}, Views: ${viewResults}`);
+
+    nameResults.push(imageList[i].name);
+    clickResults.push(imageList[i].clicks);
+    viewResults.push(imageList[i].views);
+
+    let names = imageList[i].name;
+    let clicks = imageList[i].clicks;
+    let views = imageList[i].views;
+
+    let result = (`${names} - Clicks: ${clicks}, Views: ${views}`);
 
     let containerEl = document.getElementById('votingResults');
     let resultEl = document.createElement('p');
     containerEl.appendChild(resultEl);
     resultEl.textContent = result;
   }
+
+  console.log(clickResults);
+  let votingChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: imgFiles,
+      datasets: [{
+        label: '# of Votes',
+        data: clickResults,
+        backgroundColor: 'rgb(25, 119, 80)'
+      }, {
+        label: '# of Views',
+        data: viewResults,
+        backgroundColor: '#A63F37',
+      }]
+    },
+  });
+
 }
+
+
 console.log(imageList);
