@@ -169,11 +169,11 @@ function votingResults(){
       datasets: [{
         label: '# of Votes',
         data: clickResults,
-        backgroundColor: 'Orange'
+        backgroundColor: 'rgb(25, 119, 80)'
       }, {
         label: '# of Views',
         data: viewResults,
-        backgroundColor: 'Blue',
+        backgroundColor: '#A63F37',
       }]
     },
   });
