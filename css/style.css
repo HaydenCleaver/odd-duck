@@ -35,11 +35,13 @@ img {
 }
 
 #chartArea{
-    grid-column: 3;
+    grid-column: 1;
     grid-row: 2;
+    
     /* try assigning to specific grid areas  */
 }
 
 #myChart{
-
+    max-width: 400;
+    max-height: 500;
 }

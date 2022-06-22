@@ -1,7 +1,8 @@
 'use strict';
 
 let votingRounds = 25;
-const imageList = [];
+
+let imageList = storagePull() || [];
 
 let imageEls = document.querySelectorAll('img');
 
@@ -42,10 +43,11 @@ let imgFiles = [
   'wine-glass.jpg'
 ];
 
-for (let i = 0; i < imgFiles.length; i++){
-  new Image(imgFiles[i]);
+if (!imageList.length){
+  for (let i = 0; i < imgFiles.length; i++){
+    new Image(imgFiles[i]);
+  }
 }
-
 renderImage();
 
 function randomImage() {
@@ -59,10 +61,6 @@ function renderImage() {
   let imgTwo = randomImage();
   let imgThree = randomImage();
 
-  let currentImgs = [imgOne.id, imgTwo.id, imgThree.id];
-
-  console.log(imgOne.id, imgTwo.id, imgThree.id);
-
   while (imgOne.id === imgTwo.id || imgOne.id === imgThree.id || imgOne.seen === true){
     imgOne = randomImage();
   }
@@ -75,15 +73,6 @@ function renderImage() {
     imgThree = randomImage();
   }
 
-  // for (let i = 0; i < currentImgs.length; i++){
-  //   while (imgOne === currentImgs[i]){
-  //     imgOne = randomImage();
-  //   }
-  // }
-
-  console.log(imgOne.id, imgTwo.id, imgThree.id);
-  console.log(currentImgs);
-
   imageEls[0].id = imgOne.id;
   imageEls[0].src = imgOne.src;
   imageEls[1].id = imgTwo.id;
@@ -92,6 +81,7 @@ function renderImage() {
   imageEls[2].src = imgThree.src;
 
   console.log(imageEls);
+
   //Does this work because imgOne = randomImage(); = an image object created by constructor?
   imgOne.views++;
   imgTwo.views++;
@@ -108,10 +98,14 @@ function renderImage() {
 }
 
 console.log(votingRounds);
-imageEls.forEach(function(img){
-  img.addEventListener('click', voteClick);
-});
 
+function addListener(){
+  imageEls.forEach(function(img){
+    img.addEventListener('click', voteClick);
+  });
+}
+
+addListener();
 
 
 function voteClick(event){
@@ -122,21 +116,35 @@ function voteClick(event){
     if (event.target.id === imageList[i].id){
       imageList[i].clicks++;
       votingRounds = votingRounds - 1;
+      storagePush();
     }
   }
-
   console.log(votingRounds);
 
   if (votingRounds <= 0){
     imageEls.forEach(function(img){
       img.removeEventListener('click', voteClick)
-      alert('Voting is over.');
     });
+
+    alert('Voting is now over.');
   }
 
   renderImage();
   console.log(imageList);
 }
+
+function storagePush(){
+  let stringConvert = JSON.stringify(imageList);
+  console.log(stringConvert);
+  return localStorage.setItem('images', stringConvert);
+}
+
+function storagePull(){
+  let stringStore = localStorage.getItem('images');
+  return JSON.parse(stringStore);
+}
+
+
 
 function votingResults(){
 
@@ -181,5 +189,23 @@ function votingResults(){
     });
   }
 }
+
+function reset(){
+  for (let i = 0; i < imageList.length; i++){
+    localStorage.clear();
+    imageList = [];
+    votingRounds = 25;
+
+    addListener();
+
+    let chartDelete = document.getElementById('myChart');
+    chartDelete.remove();
+
+    alert('Please refresh page to begin voting again.');
+
+  }
+}
+
+
 
 console.log(imageList);
