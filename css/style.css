@@ -4,14 +4,28 @@ body{
 }
 main{
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 600px 220px 220px 220px;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    
+    "sidebar header header header"
+    "sidebar main main main"
+    "footer footer footer footer";
     /* align-content: stretch; */
     /* grid-template-rows: .3fr 1fr 1fr; */
 }
 
 header {
     background-color: rgb(25, 119, 80);
+    height: 60px;
     text-align: left;
+    margin-bottom: 0px;
+}
+
+hr{
+    background-color: white;
+    height:10px;
+    margin-top: 0px;
 }
 
 img {
@@ -20,18 +34,20 @@ img {
     margin-left: 0px;
     margin-right: 0px;
     justify-self: start;
+    border: solid rgb(25, 119, 80) 5px;
 }
 
 #voteContainer {
     width: 300px;
     display: grid;
-    grid-template-columns: .3fr;
+    /* grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr; */
     align-items: center;
 }
 
 #voteContainer > div {
-    justify-content: flex-end;
     text-align: center;
+    
 }
 
 #chartArea{
@@ -44,4 +60,8 @@ img {
 #myChart{
     max-width: 400;
     max-height: 500;
+}
+
+p{
+    grid-column: span 3;
 }
