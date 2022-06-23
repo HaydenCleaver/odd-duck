@@ -20,6 +20,12 @@ header {
     height: 60px;
     text-align: left;
     margin-bottom: 0px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1{
+    padding-left: 5px;
+    padding-top: 10px;
 }
 
 hr{
@@ -28,7 +34,7 @@ hr{
     margin-top: 0px;
 }
 
-img {
+.voteImg {
     height: 200px;
     width: 200px;
     margin-left: 0px;
@@ -64,4 +70,5 @@ img {
 
 p{
     grid-column: span 3;
+    font-family: 'Source Sans Pro', sans-serif;
 }
