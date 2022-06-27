@@ -82,7 +82,6 @@ function renderImage() {
 
   console.log(imageEls);
 
-  //Does this work because imgOne = randomImage(); = an image object created by constructor?
   imgOne.views++;
   imgTwo.views++;
   imgThree.views++;
@@ -163,11 +162,6 @@ function votingResults(){
     let views = imageList[i].views;
 
     let result = (`${names} - Clicks: ${clicks}, Views: ${views}`);
-
-    // let containerEl = document.getElementById('votingResults');
-    // let resultEl = document.createElement('p');
-    // containerEl.appendChild(resultEl);
-    // resultEl.textContent = result;
   }
 
   console.log(clickResults);
